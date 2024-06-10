@@ -45,11 +45,13 @@ const Toast = () => {
                     initial={{ opacity: 0, y: -10, translateX: '-50%' }}
                     transition={{ duration: TRANSITION_DURATION }}
                     animate={animationControls}
-                    className={`fixed top-5 rounded-lg p-4 ${stylesForType.styleClass[type]} left-1/2 z-50 flex max-w-full transform items-center gap-1 text-sm`}
+                    className={`fixed top-5 rounded-lg p-4 ${stylesForType.styleClass[type]} left-1/2 z-50 flex min-w-60 max-w-full transform items-center gap-2 text-sm`}
                 >
-                    <span className="">{stylesForType.icon[type]}</span>
-                    <span className="font-medium">{`${type.charAt(0).toUpperCase()}${type.slice(1)}:`}</span>
-                    {message}
+                    {stylesForType.icon[type]}
+                    <div className="flex-1">
+                        <h3 className="font-semibold">{`${type.charAt(0).toUpperCase()}${type.slice(1)}: `}</h3>
+                        {message}
+                    </div>
                 </motion.div>
             )}
         </AnimatePresence>
