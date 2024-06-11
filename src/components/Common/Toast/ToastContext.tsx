@@ -1,5 +1,5 @@
 import { createContext, useContext, useState } from 'react'
-import { TToastContext, TToastProviderProps } from '../../Types/Toast'
+import { TToastContext, TToastProviderProps } from '../../../Types/Toast'
 
 const defaultToastContext: TToastContext = {
     toast: { isVisible: false, type: 'info', message: '' },

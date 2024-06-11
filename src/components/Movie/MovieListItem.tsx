@@ -1,44 +1,55 @@
 import { useEffect, useState } from 'react'
 import { TMovieListItem } from '../../Types/Movie'
-import { HiOutlineHeart, HiHeart } from 'react-icons/hi2'
+import { HiOutlineHeart, HiHeart, HiOutlineVideoCameraSlash } from 'react-icons/hi2'
 import { motion } from 'framer-motion'
 
-const MovieListItem = ({ movie }: { movie: TMovieListItem }) => {
+const FAVOURITES_LS_KEY = 'favourites'
+const MovieListItem = ({ movie, variants }: { movie: TMovieListItem; variants: any }) => {
     const [isFavourited, setIsFavourited] = useState<boolean>(false)
 
     useEffect(() => {
-        const favourites = localStorage.getItem('favourites')
-        if (favourites) {
-            const favouritesArray = JSON.parse(favourites)
-            if (favouritesArray.includes(movie.imdbID)) {
-                setIsFavourited(true)
-            }
+        const favourites = getFavourites()
+        if (favourites.includes(movie.imdbID)) {
+            setIsFavourited(true)
         }
     }, [movie.imdbID])
 
     const handleFavourite = (e: React.MouseEvent<HTMLButtonElement>) => {
         e.stopPropagation()
-        const favourites = localStorage.getItem('favourites')
-        if (favourites) {
-            const favouritesArray = JSON.parse(favourites)
-            if (favouritesArray.includes(movie.imdbID)) {
-                const filteredFavourites = favouritesArray.filter((favourite: string) => favourite !== movie.imdbID)
-                localStorage.setItem('favourites', JSON.stringify(filteredFavourites))
-                setIsFavourited(false)
-            } else {
-                const updatedFavourites = [...favouritesArray, movie.imdbID]
-                localStorage.setItem('favourites', JSON.stringify(updatedFavourites))
-                setIsFavourited(true)
-            }
+        const favourites = getFavourites()
+        if (favourites.includes(movie.imdbID)) {
+            const filteredFavourites = favourites.filter((favourite: string) => favourite !== movie.imdbID)
+            setFavourites(filteredFavourites)
+            setIsFavourited(false)
         } else {
-            localStorage.setItem('favourites', JSON.stringify([movie.imdbID]))
+            const updatedFavourites = [...favourites, movie.imdbID]
+            setFavourites(updatedFavourites)
             setIsFavourited(true)
         }
     }
 
+    const getFavourites = (): string[] => {
+        const favourites = localStorage.getItem(FAVOURITES_LS_KEY)
+        return favourites ? JSON.parse(favourites) : []
+    }
+
+    const setFavourites = (favourites: string[]) => {
+        localStorage.setItem(FAVOURITES_LS_KEY, JSON.stringify(favourites))
+    }
+
     return (
-        <div className="relative flex cursor-pointer flex-col items-center justify-center rounded-xl shadow-sm sm:transition-transform sm:hover:scale-105">
-            <img src={movie.img} alt={movie.title} className="h-full w-full rounded-t-xl" />
+        <motion.div
+            className="flex cursor-pointer flex-col items-center justify-center rounded-xl shadow-sm"
+            whileHover={{ scale: 1.05, transition: { duration: 0.15 } }}
+            variants={variants}
+        >
+            {movie.img === undefined ? (
+                <div className="flex h-full w-full items-center justify-center rounded-t-xl bg-neutral-800">
+                    <HiOutlineVideoCameraSlash size={64} className="text-offWhite" />
+                </div>
+            ) : (
+                <img src={movie.img} alt={movie.title} className="h-full w-full rounded-t-xl" />
+            )}
             <div className="flex h-32 w-full items-start justify-between gap-1 rounded-b bg-neutral-800 px-2">
                 <div className="text-offWhite">
                     <h3 className="mt-2 line-clamp-2 overflow-hidden text-lg font-semibold">{movie.title}</h3>
@@ -63,7 +74,7 @@ const MovieListItem = ({ movie }: { movie: TMovieListItem }) => {
                     </motion.button>
                 </div>
             </div>
-        </div>
+        </motion.div>
     )
 }
 
