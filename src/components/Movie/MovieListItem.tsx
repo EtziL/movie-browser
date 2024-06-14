@@ -39,7 +39,7 @@ const MovieListItem = ({ movie, variants }: { movie: TMovieListItem; variants: a
 
     return (
         <motion.div
-            className="flex cursor-pointer flex-col items-center justify-center rounded-xl shadow-sm"
+            className="h-90 md:h-116 xl:h-141 flex cursor-pointer flex-col items-center justify-center rounded-xl shadow-sm"
             whileHover={{ scale: 1.05, transition: { duration: 0.15 } }}
             variants={variants}
         >
@@ -48,7 +48,7 @@ const MovieListItem = ({ movie, variants }: { movie: TMovieListItem; variants: a
                     <HiOutlineVideoCameraSlash size={64} className="text-offWhite" />
                 </div>
             ) : (
-                <img src={movie.img} alt={movie.title} className="h-full w-full rounded-t-xl" />
+                <img src={movie.img} alt={movie.title} className="h-full w-full rounded-t-xl object-cover" />
             )}
             <div className="flex h-32 w-full items-start justify-between gap-1 rounded-b bg-neutral-800 px-2">
                 <div className="text-offWhite">

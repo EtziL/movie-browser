@@ -12,7 +12,7 @@ const SearchBar = () => {
     useEffect(() => {
         const timerId = setTimeout(() => {
             setDebouncedName(searchedName)
-        }, 500) // TODO: Change to 250 for production
+        }, 250)
 
         return () => {
             clearTimeout(timerId)
@@ -22,7 +22,7 @@ const SearchBar = () => {
     useEffect(() => {
         if (debouncedName) {
             const formatedSearchedName = debouncedName.trim().replace(/\s/g, '+')
-            navigate(`/search/${formatedSearchedName}`)
+            navigate(`/search/${formatedSearchedName}/page/1`)
         }
     }, [debouncedName, navigate])
 

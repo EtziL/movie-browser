@@ -11,6 +11,11 @@ export default {
             fontFamily: {
                 inter: ['Inter', 'sans-serif'],
             },
+            height: {
+                90: '22.5rem',
+                116: '29rem',
+                141: '35.25rem',
+            },
         },
     },
     plugins: [],
