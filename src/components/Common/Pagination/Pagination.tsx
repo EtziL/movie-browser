@@ -43,7 +43,7 @@ const Pagination = ({ totalItems, itemsPerPage }: Props) => {
 
     return (
         <div className="flex items-center justify-center text-offWhite">
-            <div className="flex space-x-1">
+            <div className="flex sm:space-x-1">
                 {/* Prev & First */}
                 <PaginationBtn disabledCondition={currentPageNumber === 1} onClickFnc={() => navigateToPage(currentPageNumber - 1)} Icon={HiChevronLeft} />
                 <PaginationBtn onClickFnc={() => navigateToPage(1)} pageNumber={1} active={currentPageNumber === 1} />
