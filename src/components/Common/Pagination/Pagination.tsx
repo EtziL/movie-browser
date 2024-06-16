@@ -13,6 +13,7 @@ const Pagination = ({ totalItems, itemsPerPage }: Props) => {
     const currentPageNumber = Number(currentPage)
 
     const navigateToPage = (page: number) => {
+        window.scrollTo({ top: 0, behavior: 'smooth' })
         navigate(`/search/${searchedName}/page/${page}`)
     }
 

@@ -15,7 +15,7 @@ const PaginationBtn = ({ disabledCondition, onClickFnc, Icon, pageNumber, active
             className={`flex h-10 w-10 items-center justify-center rounded-full p-3 text-offWhite transition-colors hover:bg-darkRed hover:bg-opacity-30 disabled:opacity-50 disabled:hover:bg-transparent ${active ? 'bg-darkRed bg-opacity-30' : ''}`}
             onClick={onClickFnc}
             disabled={disabledCondition}
-            whileTap={{ scale: 0.8 }}
+            whileTap={disabledCondition ? {} : { scale: 0.9 }}
         >
             {Icon ? (
                 <div>

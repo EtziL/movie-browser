@@ -12,7 +12,7 @@ const MovieList = () => {
     const API_KEY = import.meta.env.VITE_API_KEY
     const [loading, setLoading] = useState<boolean>(true)
     const [movies, setMovies] = useState<TMovieListItem[]>([])
-    const { searchedName, currentPage } = useParams<{ searchedName: string; currentPage: string }>()
+    const { searchedName = '', currentPage } = useParams<{ searchedName: string; currentPage: string }>()
     const [totalResults, setTotalResults] = useState<number>(0)
     const { showToast } = useToast()
 
@@ -41,7 +41,6 @@ const MovieList = () => {
                     handleErrorResponse(data.Error)
                 } else if (data.Search && data.totalResults) {
                     handleSuccessResponse(data.Search, Number(data.totalResults))
-                    console.log(data)
                 }
             }
         } catch (error) {
@@ -76,7 +75,7 @@ const MovieList = () => {
     }
 
     useEffect(() => {
-        if (movies.length == 0) {
+        if (movies.length == 0 || !movies[0]?.title.toLowerCase().includes(searchedName?.toLowerCase())) {
             setLoading(true)
         }
         getData()
@@ -85,8 +84,8 @@ const MovieList = () => {
     return (
         <AnimatePresence mode="wait">
             {loading ? (
-                <motion.div key={'loader'} className="h-full text-lg" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.33 }}>
-                    <Loader />
+                <motion.div key={'loader'} className="h-141 text-offWhite" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.33 }}>
+                    <Loader text={searchedName?.length <= 4 ? 'Try to be more specific..' : 'Getting Data'} />
                 </motion.div>
             ) : (
                 <motion.div key={'content'} className="mt-12 w-full" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.33 }}>

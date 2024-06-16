@@ -16,7 +16,7 @@ const Loader = ({ text }: Props) => {
                     transition={{ repeat: Infinity, duration: 2, repeatType: 'loop', ease: 'linear', times: [0, 0.25, 0.5, 0.75, 1], delay: i * 0.2, repeatDelay: 1 }}
                 />
             ))}
-            {text && <h1 className="mt-52 animate-pulse text-center font-inter text-base uppercase sm:text-lg">{text}</h1>}
+            {text && <h1 className="mt-36 animate-pulse text-center font-inter text-base uppercase sm:text-lg">{text}</h1>}
         </div>
     )
 }

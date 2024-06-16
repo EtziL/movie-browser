@@ -1,11 +1,12 @@
 import { useEffect, useState } from 'react'
 import { HiOutlineMagnifyingGlass } from 'react-icons/hi2'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import { useToast } from './Toast/ToastContext'
 
 const SearchBar = () => {
     const [searchedName, setSearchedName] = useState<string>('')
     const [debouncedName, setDebouncedName] = useState<string>('')
+    const { pageNumber = '1' } = useParams<{ pageNumber: string }>()
     const navigate = useNavigate()
     const { showToast } = useToast()
 
@@ -22,9 +23,9 @@ const SearchBar = () => {
     useEffect(() => {
         if (debouncedName) {
             const formatedSearchedName = debouncedName.trim().replace(/\s/g, '+')
-            navigate(`/search/${formatedSearchedName}/page/1`)
+            navigate(`/search/${formatedSearchedName}/page/${pageNumber}`)
         }
-    }, [debouncedName, navigate])
+    }, [debouncedName])
 
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
