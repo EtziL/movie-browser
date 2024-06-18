@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { HiOutlineMagnifyingGlass } from 'react-icons/hi2'
 import { useNavigate, useParams } from 'react-router-dom'
-import { useToast } from './Toast/ToastContext'
+import { useToast } from './Toast/../../index'
 
 const SearchBar = () => {
     const [searchedName, setSearchedName] = useState<string>('')
@@ -39,7 +39,7 @@ const SearchBar = () => {
 
     return (
         <form className="flex items-center gap-2" onSubmit={handleSubmit}>
-            <div className="relative mx-auto flex w-full min-w-64 max-w-96 items-center rounded-lg border border-neutral-600 shadow-sm">
+            <div className="relative mx-auto flex w-full min-w-32 max-w-96 items-center rounded-lg border border-neutral-600 shadow-sm">
                 <input
                     onChange={(e) => setSearchedName(e.target.value)}
                     type="text"

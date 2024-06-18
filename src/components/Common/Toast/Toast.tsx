@@ -1,5 +1,5 @@
 import { useEffect } from 'react'
-import { useToast } from './ToastContext'
+import { useToast } from './../../index'
 import { AnimatePresence, motion, useAnimation } from 'framer-motion'
 import { HiOutlineCheck, HiOutlineInformationCircle, HiOutlineExclamationTriangle } from 'react-icons/hi2'
 

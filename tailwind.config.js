@@ -16,6 +16,9 @@ export default {
                 116: '29rem',
                 141: '35.25rem',
             },
+            minHeight: {
+                141: '35.25rem',
+            },
         },
     },
     plugins: [],

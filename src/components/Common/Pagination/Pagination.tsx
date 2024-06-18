@@ -1,6 +1,6 @@
 import { useNavigate, useParams } from 'react-router-dom'
 import { HiChevronLeft, HiChevronRight } from 'react-icons/hi2'
-import PaginationBtn from './PaginationBtn'
+import { PaginationBtn } from './../../index'
 
 type Props = {
     totalItems: number
