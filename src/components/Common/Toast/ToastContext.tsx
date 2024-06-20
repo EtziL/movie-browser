@@ -1,5 +1,14 @@
-import { createContext, useContext, useState } from 'react'
-import { TToastContext, TToastProviderProps } from '../../../Types/Toast'
+import { ReactNode, createContext, useContext, useState } from 'react'
+
+type TToastContext = {
+    toast: {
+        isVisible: boolean
+        type: 'info' | 'error' | 'success'
+        message: string
+    }
+    showToast: (type: 'info' | 'error' | 'success', message: string) => void
+    hideToast: () => void
+}
 
 const defaultToastContext: TToastContext = {
     toast: { isVisible: false, type: 'info', message: '' },
@@ -13,7 +22,7 @@ export const useToast = () => {
     return useContext(ToastContext)
 }
 
-export const ToastProvider = ({ children }: TToastProviderProps) => {
+export const ToastProvider = ({ children }: { children: ReactNode }) => {
     const [toast, setToast] = useState<TToastContext['toast']>({ isVisible: false, type: 'info', message: '' })
 
     const showToast = (type: TToastContext['toast']['type'], message: TToastContext['toast']['message']) => {
