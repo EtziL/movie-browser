@@ -3,16 +3,20 @@ import { TMovieListItem, TMovieAPIResponse } from '../../Types/Movie'
 import axios from 'axios'
 import { useLocation, useParams } from 'react-router-dom'
 import { AnimatePresence, motion } from 'framer-motion'
-import { MovieListItem, Loader, Pagination, useToast } from './../index'
+import { MovieListItem, Loader, Pagination, useToast, useFavourites } from './../index'
 
 const MovieList = () => {
     const API_KEY = import.meta.env.VITE_API_KEY
+    const ITEMS_PER_PAGE = 10
     const [loading, setLoading] = useState<boolean>(true)
     const [movies, setMovies] = useState<TMovieListItem[]>([])
-    const { searchedName = '', currentPage } = useParams<{ searchedName: string; currentPage: string }>()
     const [totalResults, setTotalResults] = useState<number>(0)
-    const { showToast } = useToast()
     const location = useLocation()
+    const { searchedName = '', currentPage } = useParams<{ searchedName: string; currentPage: string }>()
+    const { showToast } = useToast()
+    const { favourites } = useFavourites()
+
+    const isFavouritesPage = location.pathname.startsWith('/favourites')
 
     const animationVariants = {
         containerVariants: {
@@ -30,7 +34,7 @@ const MovieList = () => {
         },
     }
 
-    const getData = async () => {
+    const getAPIData = async () => {
         try {
             const response = await axios.get(`http://www.omdbapi.com/?apikey=${API_KEY}&s=${searchedName}*&page=${currentPage}`)
             const data = response.data as { Response: 'False' | 'True'; Error?: string; Search?: TMovieAPIResponse[]; totalResults?: string }
@@ -71,27 +75,21 @@ const MovieList = () => {
     }
 
     useEffect(() => {
-        if (location.pathname === '/favourites') {
-            const favourites = localStorage.getItem('favourites')
-            if (favourites) {
-                const parsedFavourites = JSON.parse(favourites)
-                if (parsedFavourites.length == 0) {
-                    setMovies([])
-                    setTotalResults(0)
-                    setLoading(false)
-                    return
-                }
-                setMovies(parsedFavourites)
-                setTotalResults(parsedFavourites.length)
-                setLoading(false)
-            }
-        } else {
+        if (!isFavouritesPage) {
             if (movies.length == 0 || !movies[0]?.title.toLowerCase().includes(searchedName?.toLowerCase())) {
                 setLoading(true)
             }
-            getData()
+            getAPIData()
         }
     }, [searchedName, currentPage, location])
+
+    useEffect(() => {
+        if (isFavouritesPage) {
+            setMovies(favourites.slice((Number(currentPage) - 1) * ITEMS_PER_PAGE, Number(currentPage) * ITEMS_PER_PAGE))
+            setTotalResults(favourites.length)
+            setLoading(false)
+        }
+    }, [currentPage, location, favourites])
 
     return (
         <AnimatePresence mode="wait">
@@ -101,7 +99,7 @@ const MovieList = () => {
                 </motion.div>
             ) : (
                 <motion.div key={'content'} className="w-full" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.33 }}>
-                    {movies.length === 0 && location.pathname === '/favourites' ? (
+                    {movies.length === 0 && isFavouritesPage ? (
                         <motion.div className="mt-12 h-141" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.33 }}>
                             <h1 className="mt-14 text-center text-xl text-offWhite">
                                 You have no <span className="text-2xl text-darkRed decoration-brightRed">favourite</span> movies
@@ -120,7 +118,7 @@ const MovieList = () => {
                                 ))}
                             </motion.div>
                             <div className="mt-14 w-full pb-28">
-                                <Pagination totalItems={totalResults} itemsPerPage={10} />
+                                <Pagination totalItems={totalResults} itemsPerPage={ITEMS_PER_PAGE} />
                             </div>
                         </>
                     )}

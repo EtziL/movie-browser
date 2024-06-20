@@ -1,43 +1,23 @@
-import { useEffect, useState } from 'react'
 import { TMovieListItem } from '../../Types/Movie'
 import { HiOutlineHeart, HiHeart } from 'react-icons/hi2'
 import { motion } from 'framer-motion'
 import { useNavigate } from 'react-router-dom'
-import { MovieImg } from './../index'
+import { MovieImg, useFavourites } from './../index'
 
-const FAVOURITES_LS_KEY = 'favourites'
 const MovieListItem = ({ movie, variants }: { movie: TMovieListItem; variants: any }) => {
-    const [isFavourited, setIsFavourited] = useState<boolean>(false)
     const navigate = useNavigate()
+    const { addFavourite, removeFavourite, isInFavourites } = useFavourites()
 
-    useEffect(() => {
-        const favourites = getFavourites()
-        if (favourites.find((favourite) => favourite.imdbID === movie.imdbID)) {
-            setIsFavourited(true)
-        }
-    }, [movie.imdbID])
+    const isFavourited = isInFavourites(movie.imdbID)
 
     const handleFavourite = (e: React.MouseEvent<HTMLButtonElement>) => {
         e.stopPropagation()
-        const favourites = getFavourites()
-        if (favourites.find((favourite) => favourite.imdbID === movie.imdbID)) {
-            const filteredFavourites = favourites.filter((favourite: TMovieListItem) => favourite.imdbID !== movie.imdbID)
-            setFavourites(filteredFavourites)
-            setIsFavourited(false)
+
+        if (isFavourited) {
+            removeFavourite(movie.imdbID)
         } else {
-            const updatedFavourites = [...favourites, movie]
-            setFavourites(updatedFavourites)
-            setIsFavourited(true)
+            addFavourite(movie)
         }
-    }
-
-    const getFavourites = (): TMovieListItem[] => {
-        const favourites = localStorage.getItem(FAVOURITES_LS_KEY)
-        return favourites ? JSON.parse(favourites) : []
-    }
-
-    const setFavourites = (favourites: TMovieListItem[]) => {
-        localStorage.setItem(FAVOURITES_LS_KEY, JSON.stringify(favourites))
     }
 
     return (
