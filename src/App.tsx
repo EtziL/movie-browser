@@ -5,8 +5,8 @@ function App() {
     // TODO: Update MovieList on "/favourites" based on removal from localStorage | come-up with better root path | Unit / Integration tests
 
     return (
-        <div className="min-h-screen w-full bg-gradient-to-t from-neutral-900 via-offBlack to-neutral-800 p-6 font-inter sm:pl-[calc(100vw-100%)]">
-            <div className="container mx-auto flex h-full flex-col">
+        <div className="min-h-screen w-full bg-gradient-to-t from-neutral-900 via-offBlack to-neutral-800 py-6 font-inter sm:pl-[calc(100vw-100%)]">
+            <div className="container mx-auto flex h-full flex-col px-6">
                 <Toast />
                 <TopBar />
                 <div className="relative mt-12 flex-1">
