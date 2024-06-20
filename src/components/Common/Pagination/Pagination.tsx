@@ -8,13 +8,21 @@ type Props = {
 }
 
 const Pagination = ({ totalItems, itemsPerPage }: Props) => {
-    const { searchedName, currentPage } = useParams<{ searchedName: string; currentPage: string }>()
+    const { currentPage } = useParams<{ currentPage: string }>()
     const navigate = useNavigate()
     const currentPageNumber = Number(currentPage)
+    const basePath = location.pathname.split('/page')[0]
 
     const navigateToPage = (page: number) => {
         window.scrollTo({ top: 0, behavior: 'smooth' })
-        navigate(`/search/${searchedName}/page/${page}`)
+        if (page === numberOfPages) {
+            // Delay on last page to avoid flickering (it may contain less items)
+            setTimeout(() => {
+                navigate(`${basePath}/page/${page}`, { replace: true })
+            }, 200)
+        } else {
+            navigate(`${basePath}/page/${page}`, { replace: true })
+        }
     }
 
     const numberOfPages = Math.ceil(totalItems / itemsPerPage)
