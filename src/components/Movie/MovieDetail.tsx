@@ -73,7 +73,7 @@ const MovieDetail = () => {
         const minutes = parseInt(runtime.split(' ')[0])
         const duration = { hours: Math.floor(minutes / 60), minutes: minutes % 60 }
         const formatedRuntime = formatDuration(duration)
-        const formattedRuntime = formatedRuntime.replace('minutes', 'm').replace('hours', 'h')
+        const formattedRuntime = formatedRuntime.replace('minutes', 'm').replace('hours', 'h').replace('hour', 'h')
         return formattedRuntime.replace(/\d\s/g, (match) => match.trim())
     }
 
