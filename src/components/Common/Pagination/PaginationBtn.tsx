@@ -16,6 +16,7 @@ const PaginationBtn = ({ disabledCondition, onClickFnc, Icon, pageNumber, active
             onClick={onClickFnc}
             disabled={disabledCondition}
             whileTap={disabledCondition ? {} : { scale: 0.9 }}
+            data-testid="pagination-btn"
         >
             {Icon ? (
                 <div>

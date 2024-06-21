@@ -36,7 +36,7 @@ describe('Toast', () => {
             expect(screen.getByTestId('toast-container')).toBeVisible()
         })
     })
-    it('displays correct message and type (error)', () => {
+    it('displays correct message and type (error)', async () => {
         const TestComponent = () => {
             const { showToast } = useToast()
 
@@ -56,9 +56,12 @@ describe('Toast', () => {
 
         expect(screen.getByText('Error:')).toBeInTheDocument()
         expect(screen.getByText('Error message')).toBeInTheDocument()
+        await waitFor(() => {
+            expect(screen.getByTestId('toast-container')).toBeVisible()
+        })
     })
 
-    it('displays correct message and type (info)', () => {
+    it('displays correct message and type (info)', async () => {
         const TestComponent = () => {
             const { showToast } = useToast()
 
@@ -78,6 +81,9 @@ describe('Toast', () => {
 
         expect(screen.getByText('Info:')).toBeInTheDocument()
         expect(screen.getByText('Info message')).toBeInTheDocument()
+        await waitFor(() => {
+            expect(screen.getByTestId('toast-container')).toBeVisible()
+        })
     })
 
     it('hides when hideToast is called', () => {
