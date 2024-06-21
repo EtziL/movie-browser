@@ -42,6 +42,7 @@ const Toast = () => {
         <AnimatePresence>
             {isVisible && (
                 <motion.div
+                    data-testid="toast-container"
                     initial={{ opacity: 0, y: -10, translateX: '-50%' }}
                     transition={{ duration: TRANSITION_DURATION }}
                     animate={animationControls}
