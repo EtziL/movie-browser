@@ -13,24 +13,20 @@ vi.mock('react-router-dom', async () => {
     }
 })
 
-// Mock the axios module
 vi.mock('axios')
 
 describe('MovieList', () => {
     beforeEach(() => {
-        // Reset mocks before each test
         vi.resetAllMocks()
     })
 
     it('shows loader while fetching data', async () => {
-        // Provide a mock implementation for axios.get
         vi.mocked(axios.get).mockReturnValue(new Promise((resolve) => setTimeout(() => resolve({ data: { Response: 'True', Search: [], totalResults: '0' } }), 100)))
 
         render(<MovieList />, { wrapper: MemoryRouter })
 
         expect(screen.getByText(/getting data/i)).toBeInTheDocument()
 
-        // Wait for axios to resolve
         await waitFor(() => expect(axios.get).toHaveBeenCalled())
     })
 

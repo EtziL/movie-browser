@@ -61,8 +61,8 @@ const MovieDetail = () => {
             img: movieData.Poster === 'N/A' ? undefined : movieData.Poster,
             imdbRating: movieData.imdbRating !== 'N/A' ? movieData.imdbRating : undefined,
             imdbVotes: formatVoteCount(Number(movieData.imdbVotes.replace(/,/g, ''))),
-            rottenTomatoesRating: movieData.Ratings.find((rating) => rating.Source === 'Rotten Tomatoes')?.Value,
-            metacriticRating: movieData.Ratings.find((rating) => rating.Source === 'Metacritic')?.Value,
+            rottenTomatoesRating: movieData.Ratings?.find((rating) => rating.Source === 'Rotten Tomatoes')?.Value,
+            metacriticRating: movieData.Ratings?.find((rating) => rating.Source === 'Metacritic')?.Value,
         }
         setMovie(movieDetailData)
         setLoading(false)

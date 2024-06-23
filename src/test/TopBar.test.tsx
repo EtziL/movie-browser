@@ -83,7 +83,6 @@ describe('TopBar Component', () => {
             </MemoryRouter>
         )
 
-        // Path is not favourites
         vi.mocked(useLocation).mockReturnValue({
             pathname: '/other',
             state: {},
@@ -98,7 +97,6 @@ describe('TopBar Component', () => {
         )
         expect(screen.getAllByRole('button')).toHaveLength(2)
 
-        // Path is favourites
         vi.mocked(useLocation).mockReturnValue({
             pathname: '/favourites',
             state: {},
@@ -111,6 +109,6 @@ describe('TopBar Component', () => {
                 <TopBar />
             </MemoryRouter>
         )
-        expect(screen.getAllByRole('button')).toHaveLength(2) // Adjust based on actual visibility logic
+        expect(screen.getAllByRole('button')).toHaveLength(2)
     })
 })
