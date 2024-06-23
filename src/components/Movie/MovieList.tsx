@@ -7,6 +7,7 @@ import { MovieListItem, Loader, Pagination, useToast, useFavourites } from './..
 
 const MovieList = () => {
     const API_KEY = import.meta.env.VITE_API_KEY
+    console.log(import.meta.env)
     const ITEMS_PER_PAGE = 10
     const [loading, setLoading] = useState<boolean>(true)
     const [movies, setMovies] = useState<TMovieListItem[]>([])
