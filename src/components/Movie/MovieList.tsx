@@ -7,7 +7,6 @@ import { MovieListItem, Loader, Pagination, useToast, useFavourites } from './..
 
 const MovieList = () => {
     const API_KEY = import.meta.env.VITE_API_KEY
-    console.log(import.meta.env)
     const ITEMS_PER_PAGE = 10
     const [loading, setLoading] = useState<boolean>(true)
     const [movies, setMovies] = useState<TMovieListItem[]>([])
@@ -37,7 +36,7 @@ const MovieList = () => {
 
     const getAPIData = async () => {
         try {
-            const response = await axios.get(`http://www.omdbapi.com/?apikey=${API_KEY}&s=${searchedName}*&page=${currentPage}`)
+            const response = await axios.get(`https://www.omdbapi.com/?apikey=${API_KEY}&s=${searchedName}*&page=${currentPage}`)
             const data = response.data as { Response: 'False' | 'True'; Error?: string; Search?: TMovieAPIResponse[]; totalResults?: string }
             if (data) {
                 if (data.Response === 'False' && data.Error) {
