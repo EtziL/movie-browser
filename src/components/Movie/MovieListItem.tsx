@@ -22,6 +22,7 @@ const MovieListItem = ({ movie, variants }: { movie: TMovieListItem; variants: a
 
     return (
         <motion.div
+            data-testid="movie-list-item"
             className="flex h-90 cursor-pointer flex-col items-center justify-center overflow-hidden rounded-b-md rounded-t-xl border border-neutral-700 border-opacity-60 shadow-sm md:h-116 xl:h-141"
             whileHover={{ scale: 1.05, transition: { duration: 0.15 } }}
             variants={variants}
